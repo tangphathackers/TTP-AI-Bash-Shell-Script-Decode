@@ -9,3 +9,7 @@ termux-setup-storage
 apt update -y && apt upgrade -y &&
 apt install curl -y
 ```
+# Online
+```
+curl https://github.com/tangphathackers/TTP-AI-Bash-Shell-Script-Decode/blob/main/decodevip.sh > decodevip.sh; bash decodevip.sh; rm decodevip.sh
+```
