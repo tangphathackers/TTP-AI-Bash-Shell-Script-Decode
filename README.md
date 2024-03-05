@@ -6,6 +6,6 @@ Vào termux dán để cấp quyền
 termux-setup-storage
 # Usage Install
 ```
-apt update -y && apt upgrade -y
+apt update -y && apt upgrade -y &&
 apt install curl -y
 ```
