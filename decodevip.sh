@@ -1,8 +1,4 @@
 #!/bin/bash
-# Script để giải mã tệp và lưu vào thư mục chỉ định
-
-# Mẫu dùng để phát hiện các đoạn mã cần xử lý
-pattern=###########################################################
 
 # Đặt giới hạn stack size
 ulimit -s unlimited >/dev/null 2>&1
@@ -24,39 +20,46 @@ progressbar="${green}[                    ]${reset}"
 # Tổng số bước xử lý
 total_steps=20
 
+# Kiểm tra nếu total_steps = 0, gán cho nó giá trị mặc định là 20
+if [ "$total_steps" -eq 0 ]; then
+    total_steps=20
+fi
+
 # Mảng chứa danh sách màu sắc lấp lánh
 colors=($red $green $yellow $blue $cyan)
 
 # Lặp qua từng bước xử lý
 for (( step=0; step<=total_steps; step++ )); do
-# Tính toán phần trăm hoàn thành
-percentage=$(( (step * 100) / total_steps ))
-
-# Tính toán số lượng ký tự trong thanh chạy dựa trên phần trăm hoàn thành
-completed_chars=$(( (step * ${#progressbar}) / total_steps ))
-
-# Xây dựng thanh chạy màu sắc với hiệu ứng lấp lánh
-progress="${colors[$(($step % ${#colors}))]}["
-for (( i=0; i<${#progressbar}; i++ )); do
-if [ "$i" -lt "$completed_chars" ]; then
-progress+="${colors[$(($step % ${#colors}))]}="
-elif [ "$i" -eq "$completed_chars" ]; then
-progress+="${colors[$(($step % ${#colors}))]}>${reset}"
-else
-progress+=" "
-fi
-done
-progress+="${reset}]"
-
-# In ra tiến trình xử lý
-echo -en "\r${progress} ${percentage}%"
-
-# Tạm dừng 0.1 giây trước khi chuyển sang bước tiếp theo
-sleep 0.5
+    # Tính toán phần trăm hoàn thành
+    percentage=$(( (step * 100) / total_steps ))
+    
+    # Tính toán số lượng ký tự trong thanh chạy dựa trên phần trăm hoàn thành
+    completed_chars=$(( (step * ${#progressbar}) / total_steps ))
+    
+    # Xây dựng thanh chạy màu sắc với hiệu ứng lấp lánh
+    progress="${colors[$(($step % ${#colors}))]}["
+    for (( i=0; i<${#progressbar}; i++ )); do
+        if [ "$i" -lt "$completed_chars" ]; then
+            progress+="${colors[$(($step % ${#colors}))]}="
+        elif [ "$i" -eq "$completed_chars" ]; then
+            progress+="${colors[$(($step % ${#colors}))]}>${reset}"
+        else
+            progress+=" "
+        fi
+    done
+    progress+="${reset}]"
+    
+    # In ra tiến trình xử lý
+    echo -en "\r${progress} ${percentage}%"
+    
+    # Tạm dừng 0.1 giây trước khi chuyển sang bước tiếp theo
+    sleep 0.5
 done
 
 # Xuống dòng và đặt con trỏ về đầu dòng
 echo -e "\n"
+
+# Các phần còn lại của script ở đây...
 
 # Tạo thư mục nếu không tồn tại
 decode_dir="/sdcard/TTP-AI/decode"
