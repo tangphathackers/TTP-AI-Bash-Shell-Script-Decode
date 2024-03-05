@@ -30,6 +30,12 @@ colors=($red $green $yellow $blue $cyan)
 
 # Lặp qua từng bước xử lý
 for (( step=0; step<=total_steps; step++ )); do
+    # Kiểm tra nếu total_steps vẫn bằng 0, tránh lỗi division by 0
+    if [ "$total_steps" -eq 0 ]; then
+        echo "total_steps không thể bằng 0"
+        exit 1
+    fi
+    
     # Tính toán phần trăm hoàn thành
     percentage=$(( (step * 100) / total_steps ))
     
